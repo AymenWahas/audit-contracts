@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package audit.v1;
+
+option go_package = "audit-contracts/api/proto/audit/v1";
+
+service AuditService {
+    rpc CreateAuditLog(CreateAuditLogRequest)
+        returns (CreateAuditLogResponse);
+
+    rpc GetAuditLogs(GetAuditLogsRequest)
+        returns (GetAuditLogsResponse);
+
+    rpc GetAuditLog(GetAuditLogRequest)
+        returns (GetAuditLogResponse);
+}
+
+message CreateAuditLogRequest {
+    int64 user_id = 1;
+    string action = 2;
+    string resource = 3;
+    int64 resource_id = 4;
+    string result = 5;
+    string request_id = 6;
+    string task_title = 7;
+}
+
+message CreateAuditLogResponse {
+    int64 id = 1;
+    string message = 2;
+}
+
+message GetAuditLogsRequest {
+    int64 user_id = 1;
+}
+
+message GetAuditLogsResponse {
+    repeated AuditLog logs = 1;
+}
+
+message AuditLog {
+    int64 id = 1;
+    int64 user_id = 2;
+    string action = 3;
+    string resource = 4;
+    int64 resource_id = 5;
+    string result = 6;
+    string request_id = 7;
+    string created_at = 8;
+    string task_title = 9;
+}
+
+message GetAuditLogRequest {
+    int64 id = 1;
+}
+
+message GetAuditLogResponse {
+    AuditLog log = 1;
+}
